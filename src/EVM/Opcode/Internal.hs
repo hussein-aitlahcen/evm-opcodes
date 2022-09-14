@@ -18,7 +18,7 @@ import Control.Monad (void)
 import Data.Bits (shift)
 import Data.DoubleWord (Word256)
 import qualified Data.List as List
-import Data.Text (Text)
+import Data.Text (Text, pack)
 import qualified Data.Text as Text
 import Data.Word (Word8)
 import Prelude hiding (EQ, GT, LT)
@@ -129,6 +129,7 @@ data Opcode' j
   | REVERT            -- ^ 0xfd, https://eips.ethereum.org/EIPS/eip-140
   | INVALID           -- ^ 0xfe, https://eips.ethereum.org/EIPS/eip-141
   | SELFDESTRUCT      -- ^ 0xff, https://eips.ethereum.org/EIPS/eip-6
+  | UNKNOWN !Word8
   deriving (Eq, Ord, Functor)
 
 -- | Convert any @'Opcode'' a@ into an @'Opcode'' ()@.
@@ -342,6 +343,7 @@ opcodeSpec opcode = case opcode of
   REVERT       -> OpcodeSpec 0xfd 2 0 "revert"
   INVALID      -> OpcodeSpec 0xfe 0 0 "invalid" -- α, δ are ∅
   SELFDESTRUCT -> OpcodeSpec 0xff 1 0 "selfdestruct"
+  UNKNOWN x    -> OpcodeSpec x    0 0 ("unknown " <> pack (show x))
 
 instance Show a => Show (Opcode' a) where
   show (PUSH n) = "PUSH " <> show n

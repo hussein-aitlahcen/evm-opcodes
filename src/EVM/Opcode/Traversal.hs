@@ -132,6 +132,7 @@ mapOpcodeM mapper opcode = case opcode of
   REVERT       -> mapOnOther' REVERT REVERT
   INVALID      -> mapOnOther' INVALID INVALID
   SELFDESTRUCT -> mapOnOther' SELFDESTRUCT SELFDESTRUCT
+  UNKNOWN x    -> mapOnOther' (UNKNOWN x) (UNKNOWN x)
   where
     mapOnOther' :: Opcode' a -> Opcode' b -> m (Opcode' b)
     mapOnOther' opa opbDefault = do
