@@ -97,6 +97,7 @@ mapOpcodeM mapper opcode = case opcode of
   GASLIMIT    -> mapOnOther' GASLIMIT GASLIMIT
   CHAINID     -> mapOnOther' CHAINID CHAINID
   SELFBALANCE -> mapOnOther' SELFBALANCE SELFBALANCE
+  BASEFEE     -> mapOnOther' BASEFEE BASEFEE
 
   -- 50s: Stack, Memory, Storage and Flow Operations
   POP       -> mapOnOther' POP POP
